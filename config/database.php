@@ -8,24 +8,28 @@ if ($es_local) {
     $dbname = "techsolutions";
     $username = "root";
     $password = "";
+    $options = []; // Sin opciones SSL para local
 } else {
     // --- DATOS DE TU AZURE MYSQL ---
     $host = "mysql-techsolutions-jaime.mysql.database.azure.com";
     $dbname = "techsolutions";
     $username = "fjaimef";
-    $password = "Yoloyolo5"; // <--- CAMBIA ESTO por tu contraseña real
+    $password = "Yoloyolo5"; 
+
+    // Opciones para forzar SSL en Azure (Soluciona el error 3159)
+    $options = [
+        PDO::MYSQL_ATTR_SSL_CA => '/home/site/wwwroot/DigiCertGlobalRootG2.crt.pem',
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+    ];
 }
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    
-    // Si estamos en Azure, activamos el SSL (Azure lo requiere)
-    if (!$es_local) {
-        $pdo->setAttribute(PDO::MYSQL_ATTR_SSL_CA, '/home/site/wwwroot/DigiCertGlobalRootG2.crt.pem');
-    }
+    // Creamos la conexión pasando las opciones (si es local, el arreglo está vacío)
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, $options);
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    
 } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
 }
