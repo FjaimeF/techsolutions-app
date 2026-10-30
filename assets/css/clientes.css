@@ -1,0 +1,46 @@
+/* Estilos específicos para Clientes */
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.form-container h3 {
+    margin-bottom: 20px;
+    color: var(--text-main);
+    font-size: 18px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Nuevos estilos para la tabla de usuarios */
+.btn-action {
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.2s;
+}
+
+.btn-action:hover {
+    opacity: 0.8;
+}
+
+.btn-warning { background-color: var(--warning); }
+.btn-danger { background-color: var(--danger); }
+.btn-success { background-color: var(--success); }
